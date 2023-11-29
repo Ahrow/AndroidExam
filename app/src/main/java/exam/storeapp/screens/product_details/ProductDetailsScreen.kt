@@ -11,17 +11,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,13 +33,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import exam.storeapp.screens.shopping_cart.ShoppingCartViewModel
 
 
 @Composable
 fun ProductDetailsScreen(
     viewModel: ProductDetailsViewModel,
-    onBackButtonClick: () -> Unit = {}
+    onBackButtonClick: () -> Unit = {},
+    shoppingCartViewModel: ShoppingCartViewModel,
+    productId: Int,
 ) {
+    // Had to ensure that setSelectProduct is called when the screen is composed
+    LaunchedEffect(productId) {
+        viewModel.setSelectedProduct(productId)
+    }
+
     val productState = viewModel.selectedProduct.collectAsState()
     val isLoading = viewModel.loading.collectAsState()
 
@@ -148,14 +158,16 @@ fun ProductDetailsScreen(
                     color = Color.Gray
                 )
                 IconButton(
-                    onClick = { /* Add to cart logic */ },
+                    onClick = { product?.let { shoppingCartViewModel.addToCart(it) } },
                     modifier = Modifier
-                        .align(Alignment.CenterVertically)
+                        .wrapContentSize(Alignment.Center)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = "Add to cart"
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add to cart"
+                        )
+                    }
                 }
             }
         }

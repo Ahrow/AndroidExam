@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,12 +24,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
     viewModel: ProductListViewModel,
-    onProductClick: (productId: Int) -> Unit = {}
+    onProductClick: (productId: Int) -> Unit = {},
+    navController: NavController
 
 ) {
     val products = viewModel.products.collectAsState()
@@ -65,7 +67,7 @@ fun ProductListScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = {  }
+                    onClick = { viewModel.loadProducts() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Refresh,
@@ -73,11 +75,11 @@ fun ProductListScreen(
                     )
                 }
                 IconButton(
-                    onClick = { viewModel.loadProducts() }
+                    onClick = { navController.navigate("shoppingCartScreen") }
                 ) {
                     Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = "Options"
+                        imageVector = Icons.Default.ShoppingCart,
+                        contentDescription = "Cart"
                     )
                 }
             }
