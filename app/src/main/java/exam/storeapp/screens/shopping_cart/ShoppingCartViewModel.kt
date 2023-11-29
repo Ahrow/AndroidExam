@@ -10,6 +10,7 @@ import exam.storeapp.screens.order_history.OrderIdAndDateGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+//TODO LET USER ADJUST QUANTITY OF EACH PRODUCT ADDED
 class ShoppingCartViewModel : ViewModel() {
     private val _cartItems = MutableStateFlow<List<OrderItem>>(emptyList())
     val cartItems = _cartItems.asStateFlow()
@@ -21,7 +22,7 @@ class ShoppingCartViewModel : ViewModel() {
         val updatedList = _cartItems.value.toMutableList()
         val existingItem = updatedList.find { it.productId == product.id }
         if (existingItem != null) {
-            // Update quantity and total price
+            // Update quantity and total price //TODO NEED TO RESET PRICE WHEN COMPLETE PURCHASE
             existingItem.productCount += count
             existingItem.totalPrice = existingItem.productCount * product.price
         } else {
