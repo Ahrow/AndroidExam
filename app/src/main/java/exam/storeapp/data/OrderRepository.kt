@@ -15,4 +15,13 @@ object OrderRepository {
     fun updateOrders(updatedOrders: List<Order>) {
         _orders.value = updatedOrders
     }
+    fun cancelOrder(orderId: Int): Result<Unit> {
+        val orderExists = _orders.value.any { it.id == orderId }
+        if (!orderExists) {
+            return Result.failure(NoSuchElementException("Order with ID $orderId not found"))
+        }
+        val updatedOrders = _orders.value.filterNot { it.id == orderId }
+        _orders.value = updatedOrders
+        return Result.success(Unit)
+    }
 }

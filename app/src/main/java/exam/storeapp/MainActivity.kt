@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = "landingPageScreen"
                     ) {
                         composable("landingPageScreen") {
-                            LandingPageScreen(navController)
+                            LandingPageScreen()
                         }
                         composable(
                             "productListScreen"
