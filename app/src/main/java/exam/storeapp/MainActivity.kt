@@ -46,16 +46,17 @@ class MainActivity : ComponentActivity() {
             StoreAppTheme {
                 val navController = rememberNavController()
 
-                // Define your navigation items here
+                // NAVIGATION for navbar
                 val navBarItems = listOf(
                     NavBarItem("landingPageScreen", "Home", Icons.Filled.Home),
                     NavBarItem("productListScreen", "Products", Icons.Filled.List),
                     NavBarItem("shoppingCartScreen", "Cart", Icons.Filled.ShoppingCart),
                     NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info)) // Replace with actual icon
-                    // Add more items as needed
 
                 Scaffold(
                     bottomBar = { BottomNavBar(navController, navBarItems) }
+                    // GOOD PRACTICE, but dont work ???
+                    //TODO WHY ?
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,

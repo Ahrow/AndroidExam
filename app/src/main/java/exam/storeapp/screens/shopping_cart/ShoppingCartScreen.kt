@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -53,6 +54,14 @@ fun ShoppingCartScreen(viewModel: ShoppingCartViewModel) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.align(Alignment.End).padding(16.dp)
         )
+        Button(
+            onClick = { viewModel.completePurchase() },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
+        ) {
+            Text("Complete Purchase")
+        }
 
         LazyColumn(
             modifier = Modifier.fillMaxSize()
@@ -61,7 +70,6 @@ fun ShoppingCartScreen(viewModel: ShoppingCartViewModel) {
                 CartItemRow(item)
             }
         }
-
     }
 }
 

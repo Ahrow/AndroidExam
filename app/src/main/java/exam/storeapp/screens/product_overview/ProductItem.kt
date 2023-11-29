@@ -37,11 +37,11 @@ fun ProductItem(
                 horizontal = 12.dp,
                 vertical = 8.dp
             )
-            .shadow( // shadow includes clipping of content to shape (like '.clip()'-modifier)
+            .shadow(
                 elevation = 4.dp,
                 shape = RoundedCornerShape(10)
             )
-            .background(color = Color.White) // Background needs to come after shadow
+            .background(color = Color.White)
             .clickable {
                 onClick()
             },

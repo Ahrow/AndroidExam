@@ -20,15 +20,13 @@ fun OrdersListScreen(viewModel: OrderViewModel, onOrderSelected: (Int) -> Unit) 
 
 @Composable
 fun OrderItemView(order: Order, onOrderSelected: (Int) -> Unit) {
-    // Use a Card or a Surface for better UI
     Text(
         text = "Order ID: ${order.id}",
-        // Add more styling and other properties
+
     )
+    Text(text = "Order date: ${order.date}")
     Text(
         text = "Status: ${order.status.name}",
-        // Add more styling and other properties
     )
-    // Add a clickable modifier to view order details
-    // Example: .clickable { onOrderSelected(order.id) }
+  //TODO MAKE CLICKABLE .clickable { onOrderSelected(order.id) -> GOTO Details + STYLE
 }
