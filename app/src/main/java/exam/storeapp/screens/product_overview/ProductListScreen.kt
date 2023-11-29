@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -36,6 +39,8 @@ fun ProductListScreen(
 ) {
     val products = viewModel.products.collectAsState()
     val isLoading = viewModel.loading.collectAsState()
+    val filteredProducts = viewModel.filteredProducts.collectAsState()
+    val searchQuery = viewModel.searchQuery.collectAsState()
 
     if(isLoading.value) {
         Box(
@@ -46,6 +51,7 @@ fun ProductListScreen(
         }
         return
     }
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -61,6 +67,8 @@ fun ProductListScreen(
                 text = "Products",
                 style = MaterialTheme.typography.titleLarge
             )
+
+
             Row(
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End,
@@ -84,6 +92,16 @@ fun ProductListScreen(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextField(
+            value = searchQuery.value,
+            onValueChange = { query -> viewModel.updateSearchQuery(query) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            placeholder = { Text("Search products...") }
+        )
 
         Divider()
 
@@ -92,7 +110,7 @@ fun ProductListScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            items(products.value) { product ->
+            items(filteredProducts.value) { product ->
                 ProductItem(
                     product = product,
                     onClick = {
