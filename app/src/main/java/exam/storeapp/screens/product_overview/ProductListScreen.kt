@@ -1,6 +1,7 @@
 package exam.storeapp.screens.product_overview
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +33,17 @@ fun ProductListScreen(
 
 ) {
     val products = viewModel.products.collectAsState()
+    val isLoading = viewModel.loading.collectAsState()
+
+    if(isLoading.value) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center)
+        {
+            CircularProgressIndicator()
+        }
+        return
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
