@@ -1,6 +1,10 @@
 package exam.storeapp.data
 
+import android.content.Context
 import android.util.Log
+import androidx.room.Room
+import exam.storeapp.data.room.AppDatabase
+import kotlinx.coroutines.flow.first
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,32 +29,44 @@ object ProductRepository {
 
     private val _productService = _retrofit.create(ProductService::class.java)
 
-   suspend fun getProducts(): List<Product> {
-       try {
-           val response = _productService.getAllProducts()
-           if (response.isSuccessful) {
-               return response.body()?: emptyList()
-           } else {
-               throw Exception("getProducts() response is not successful")
-           }
-       } catch (e: Exception){
-           Log.e("getProducts", "Error getting products", e)
-       }
+    private lateinit var _appDatabase: AppDatabase
+    private val _productDao by lazy { _appDatabase.productDao()}
+
+    // INIT DB
+    fun initializeDatabase(context: Context) {
+        _appDatabase = Room.databaseBuilder(
+            context = context,
+            klass = AppDatabase::class.java,
+            name ="app-database"
+        ).build()
+    }
+    //TODO read documentation on this -> .fallbackToDestructiveMigration()
+
+    suspend fun getProducts(): List<Product> {
+        try {
+            // CHECK db for products first ->
+            val dbProducts = _productDao.getProducts().first()
+            if (dbProducts.isNotEmpty()) {
+                return dbProducts
+            }
+
+            // THEN if no dbProducts -> FETCH from API & INSERT
+            val response = _productService.getAllProducts()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    _productDao.insertProducts(it)
+                    return it
+                }
+            } else {
+                throw Exception("getProducts() response is not successful")
+            }
+        } catch (e: Exception){
+            Log.e("getProducts", "Error getting products", e)
+        }
         return emptyList()
     }
 
-    suspend fun getProductById(productId: Int): Product? {
-        try {
-            val response = _productService.getProduct(productId)
-            if (response.isSuccessful) {
-                return response.body()!!
-
-            } else {
-                throw Exception("Error fetching product details")
-            }
-        } catch (e: Exception) {
-            Log.e("getProductsById", "Error getting product by id", e)
-        }
-        return null
+    fun getProductById(productId: Int): Product? {
+        return _productDao.getProductById(productId)
     }
 }

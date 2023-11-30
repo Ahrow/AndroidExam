@@ -31,6 +31,7 @@ import exam.storeapp.screens.shopping_cart.ShoppingCartViewModel
 import exam.storeapp.ui.theme.StoreAppTheme
 import androidx.compose.ui.graphics.vector.ImageVector
 import exam.storeapp.data.NavBarItem
+import exam.storeapp.data.ProductRepository
 
 class MainActivity : ComponentActivity() {
     private val _productListViewModel: ProductListViewModel by viewModels()
@@ -42,6 +43,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        ProductRepository.initializeDatabase(applicationContext)
+
         setContent {
             StoreAppTheme {
                 val navController = rememberNavController()
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     NavBarItem("landingPageScreen", "Home", Icons.Filled.Home),
                     NavBarItem("productListScreen", "Products", Icons.Filled.List),
                     NavBarItem("shoppingCartScreen", "Cart", Icons.Filled.ShoppingCart),
-                    NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info)) // Replace with actual icon
+                    NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info))
 
                 Scaffold(
                     bottomBar = { BottomNavBar(navController, navBarItems) }
