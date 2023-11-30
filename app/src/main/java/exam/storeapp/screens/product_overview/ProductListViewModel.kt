@@ -29,8 +29,8 @@ class ProductListViewModel : ViewModel() {
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
-        Log.d("ProductListViewModel", "Search query updated: $query")
-        Log.d("ProductListViewModel", "Filtered products count: ${filteredProducts.value.size}")
+        Log.d("ProductListViewModel", "Search query: $query")
+        Log.d("ProductListViewModel", "Filtered count: ${filteredProducts.value.size}")
     }
     init {
         loadProducts()

@@ -1,13 +1,19 @@
 package exam.storeapp.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+
+@Entity(tableName = "orders")
 data class Order (
-val id: Int,
+@PrimaryKey val id: Int,
 val date: String,
 val totalPrice: Double,
 val items: List<OrderItem>,
 val status: OrderStatus
 )
 
+@Entity(tableName = "order_items")
 data class OrderItem(
     val productId: Int,
     val productTitle: String,
@@ -18,7 +24,6 @@ data class OrderItem(
 
 enum class OrderStatus{
     PENDING,
-    SHIPPED,
     DELIVERED,
 }
 

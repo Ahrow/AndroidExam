@@ -7,38 +7,31 @@ import exam.storeapp.data.OrderStatus
 import kotlinx.coroutines.launch
 
 class OrderViewModel : ViewModel() {
- val orders = OrderRepository.orders
+    val orders = OrderRepository.orders
 
-    // Function to update the status of an order
-    fun updateOrderStatus(orderId: Int, newStatus: OrderStatus) {
+    init {
+        fetchOrders()
+    }
+
+    private fun fetchOrders() {
         viewModelScope.launch {
-            val updatedOrders = orders.value.map { order ->
-                if (order.id == orderId) {
-                    order.copy(status = newStatus)
-                } else {
-                    order
-                }
-            }
-            OrderRepository.updateOrders(updatedOrders)
+            OrderRepository.refreshOrders()
         }
     }
 
-    // Function to simulate status change on an order
-    fun simulateStatusChange(orderId: Int) {
+    fun updateOrderStatus(orderId: Int, newStatus: OrderStatus) {
         viewModelScope.launch {
-            val updatedOrders = orders.value.map { order ->
-                if (order.id == orderId) {
-                    val newStatus = when (order.status) {
-                        OrderStatus.PENDING -> OrderStatus.SHIPPED
-                        OrderStatus.SHIPPED -> OrderStatus.DELIVERED
-                        else -> order.status
-                    }
-                    order.copy(status = newStatus)
-                } else {
-                    order
-                }
+            val orderToUpdate = orders.value.find { it.id == orderId }
+            if (orderToUpdate != null) {
+                val updatedOrder = orderToUpdate.copy(status = newStatus)
+                OrderRepository.updateOrder(updatedOrder)
             }
-            OrderRepository.updateOrders(updatedOrders)
+        }
+    }
+
+    fun deleteOrder(orderId: Int) {
+        viewModelScope.launch {
+            OrderRepository.deleteOrder(orderId)
         }
     }
 }

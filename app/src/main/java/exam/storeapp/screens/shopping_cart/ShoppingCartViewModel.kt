@@ -1,6 +1,7 @@
 package exam.storeapp.screens.shopping_cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import exam.storeapp.data.Order
 import exam.storeapp.data.OrderItem
 import exam.storeapp.data.OrderRepository
@@ -9,8 +10,11 @@ import exam.storeapp.data.Product
 import exam.storeapp.screens.order_history.OrderIdAndDateGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 //TODO LET USER ADJUST QUANTITY OF EACH PRODUCT ADDED
+//TODO CONSIDER SAVING cart to DB to keep it when app is destroyed
+
 class ShoppingCartViewModel : ViewModel() {
     private val _cartItems = MutableStateFlow<List<OrderItem>>(emptyList())
     val cartItems = _cartItems.asStateFlow()
@@ -40,15 +44,17 @@ class ShoppingCartViewModel : ViewModel() {
         _cartItems.value = updatedList
     }
     fun completePurchase() {
-        val newOrder = Order(
-            id = OrderIdAndDateGenerator.generateOrderId(),
-            date = OrderIdAndDateGenerator.getCurrentDate(),
-            totalPrice = totalSum,
-            items = _cartItems.value,
-            status = OrderStatus.PENDING
-        )
+        viewModelScope.launch {
+            val newOrder = Order(
+                id = OrderIdAndDateGenerator.generateOrderId(),
+                date = OrderIdAndDateGenerator.getCurrentDate(),
+                totalPrice = totalSum,
+                items = _cartItems.value,
+                status = OrderStatus.PENDING
+            )
 
-        OrderRepository.addOrder(newOrder)
-        _cartItems.value = emptyList()
+            OrderRepository.addOrder(newOrder)
+            _cartItems.value = emptyList()
+        }
     }
 }

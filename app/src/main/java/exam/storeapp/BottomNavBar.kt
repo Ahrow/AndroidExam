@@ -14,7 +14,7 @@ import exam.storeapp.data.NavBarItem
 fun BottomNavBar(navController: NavHostController, navBarItems: List<NavBarItem>) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.destination?.route
-
+    //TODO Include reference to Material3 BottomAppBar + Navigation Items
     BottomAppBar {
         navBarItems.forEach { item ->
             NavigationBarItem(

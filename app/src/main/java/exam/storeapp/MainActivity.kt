@@ -12,12 +12,14 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.ui.res.vectorResource
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import exam.storeapp.data.NavBarItem
+import exam.storeapp.data.OrderRepository
+import exam.storeapp.data.ProductRepository
 import exam.storeapp.screens.landing_page.LandingPageScreen
 import exam.storeapp.screens.order_history.OrderDetailsScreen
 import exam.storeapp.screens.order_history.OrderViewModel
@@ -29,9 +31,6 @@ import exam.storeapp.screens.product_overview.ProductListViewModel
 import exam.storeapp.screens.shopping_cart.ShoppingCartScreen
 import exam.storeapp.screens.shopping_cart.ShoppingCartViewModel
 import exam.storeapp.ui.theme.StoreAppTheme
-import androidx.compose.ui.graphics.vector.ImageVector
-import exam.storeapp.data.NavBarItem
-import exam.storeapp.data.ProductRepository
 
 class MainActivity : ComponentActivity() {
     private val _productListViewModel: ProductListViewModel by viewModels()
@@ -44,12 +43,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         ProductRepository.initializeDatabase(applicationContext)
+        OrderRepository.initializeDatabase(applicationContext)
 
         setContent {
             StoreAppTheme {
                 val navController = rememberNavController()
 
-                // NAVIGATION for navbar
+                // Routing for navbar
                 val navBarItems = listOf(
                     NavBarItem("landingPageScreen", "Home", Icons.Filled.Home),
                     NavBarItem("productListScreen", "Products", Icons.Filled.List),

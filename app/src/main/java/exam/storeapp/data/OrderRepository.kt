@@ -1,27 +1,47 @@
 package exam.storeapp.data
 
+import android.content.Context
+import androidx.room.Room
+import exam.storeapp.data.room.AppDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object OrderRepository {
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders = _orders.asStateFlow()
-    fun addOrder(order: Order) {
-        val updatedOrders = _orders.value.toMutableList().apply {
-            add(order)
-        }
-        _orders.value = updatedOrders
+
+    private lateinit var _appDatabase: AppDatabase
+    private val _orderDao by lazy { _appDatabase.orderDao() }
+
+    fun initializeDatabase(context: Context) {
+        _appDatabase = Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java,
+            "app-database"
+        ).fallbackToDestructiveMigration()
+            .build()
     }
-    fun updateOrders(updatedOrders: List<Order>) {
-        _orders.value = updatedOrders
+    suspend fun refreshOrders() {
+        _orders.value = _orderDao.getAllOrders()
     }
-    fun cancelOrder(orderId: Int): Result<Unit> {
-        val orderExists = _orders.value.any { it.id == orderId }
-        if (!orderExists) {
-            return Result.failure(NoSuchElementException("Order with ID $orderId not found"))
-        }
-        val updatedOrders = _orders.value.filterNot { it.id == orderId }
-        _orders.value = updatedOrders
-        return Result.success(Unit)
+
+    suspend fun addOrder(order: Order) {
+        _orderDao.insertOrder(order)
+        refreshOrders()
+    }
+
+    suspend fun updateOrder(order: Order) {
+        _orderDao.updateOrder(order)
+        refreshOrders()
+    }
+
+    suspend fun deleteOrder(orderId: Int) {
+        _orderDao.deleteOrder(orderId)
+        refreshOrders()
+    }
+
+    suspend fun resetOrders() {
+        _orderDao.resetOrders()
+        refreshOrders()
     }
 }

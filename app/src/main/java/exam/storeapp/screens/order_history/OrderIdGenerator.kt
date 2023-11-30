@@ -5,6 +5,7 @@ import java.util.Date
 import java.util.Locale
 
 class OrderIdAndDateGenerator {
+    //TODO maybe remove when DB implemented -> AUTO increment
     companion object {
         private var lastId = 0
 

@@ -38,9 +38,10 @@ object ProductRepository {
             context = context,
             klass = AppDatabase::class.java,
             name ="app-database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
-    //TODO read documentation on this -> .fallbackToDestructiveMigration()
+    //TODO read documentation on this -> .fallbackToDestructiveMigration() -> Basically CLEARS the DB
+    // Instead of migration -> Destroys the DB on rebuild ? ASK in lecture
 
     suspend fun getProducts(): List<Product> {
         try {
