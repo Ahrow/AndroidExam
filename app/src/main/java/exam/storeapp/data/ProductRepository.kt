@@ -39,19 +39,14 @@ object ProductRepository {
             klass = AppDatabase::class.java,
             name ="app-database"
         ).fallbackToDestructiveMigration().build()
+        // .fallback... -> Resolved a migration issue I had.
+        // used in migration of DB -> if fails, it falls back to destructive migration. Data Loss
+        // Should only be used in development not production.
     }
-    //TODO read documentation on this -> .fallbackToDestructiveMigration() -> Basically CLEARS the DB
-    // Instead of migration -> Destroys the DB on rebuild ? ASK in lecture
 
     suspend fun getProducts(): List<Product> {
         try {
-            // CHECK db for products first ->
-            val dbProducts = _productDao.getProducts().first()
-            if (dbProducts.isNotEmpty()) {
-                return dbProducts
-            }
-
-            // THEN if no dbProducts -> FETCH from API & INSERT
+            // FETCH from API -> Insert to DB
             val response = _productService.getAllProducts()
             if (response.isSuccessful) {
                 response.body()?.let {
@@ -59,11 +54,22 @@ object ProductRepository {
                     return it
                 }
             } else {
-                throw Exception("getProducts() response is not successful")
+                throw Exception("getProducts() API response is not successful")
             }
-        } catch (e: Exception){
-            Log.e("getProducts", "Error getting products", e)
+        } catch (apiException: Exception) {
+            Log.e("getProducts", "Error fetching products from API and inserting into DB", apiException)
+
+            // IF FETCH from API fails -> FETCH from DB
+            try {
+                val dbProducts = _productDao.getProducts().first()
+                if (dbProducts.isNotEmpty()) {
+                    return dbProducts
+                }
+            } catch (dbException: Exception) {
+                Log.e("getProducts", "Error getting products from DB", dbException)
+            }
         }
+
         return emptyList()
     }
 

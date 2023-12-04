@@ -39,9 +39,4 @@ object OrderRepository {
         _orderDao.deleteOrder(orderId)
         refreshOrders()
     }
-
-    suspend fun resetOrders() {
-        _orderDao.resetOrders()
-        refreshOrders()
-    }
 }

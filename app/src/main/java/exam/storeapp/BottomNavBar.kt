@@ -9,12 +9,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import exam.storeapp.data.NavBarItem
 
-
 @Composable
 fun BottomNavBar(navController: NavHostController, navBarItems: List<NavBarItem>) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.destination?.route
-    //TODO Include reference to Material3 BottomAppBar + Navigation Items
     BottomAppBar {
         navBarItems.forEach { item ->
             NavigationBarItem(

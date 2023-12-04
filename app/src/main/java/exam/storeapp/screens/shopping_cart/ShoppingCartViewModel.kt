@@ -26,7 +26,7 @@ class ShoppingCartViewModel : ViewModel() {
         val updatedList = _cartItems.value.toMutableList()
         val existingItem = updatedList.find { it.productId == product.id }
         if (existingItem != null) {
-            // Update quantity and total price //TODO NEED TO RESET PRICE WHEN COMPLETE PURCHASE
+            // Update quantity and total price
             existingItem.productCount += count
             existingItem.totalPrice = existingItem.productCount * product.price
         } else {

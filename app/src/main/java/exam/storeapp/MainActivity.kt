@@ -56,11 +56,10 @@ class MainActivity : ComponentActivity() {
                     NavBarItem("shoppingCartScreen", "Cart", Icons.Filled.ShoppingCart),
                     NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info))
 
+                // https://developer.android.com/jetpack/compose/components/scaffold
                 Scaffold(
                     bottomBar = { BottomNavBar(navController, navBarItems) }
-                    // GOOD PRACTICE, but dont work ???
-                    //TODO WHY ?
-                ) { innerPadding ->
+                ) {innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = "landingPageScreen"

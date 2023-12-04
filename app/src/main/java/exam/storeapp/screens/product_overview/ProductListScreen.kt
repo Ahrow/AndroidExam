@@ -52,7 +52,6 @@ fun ProductListScreen(
         return
     }
 
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
