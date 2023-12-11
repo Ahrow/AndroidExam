@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import exam.storeapp.data.CartItem
 import exam.storeapp.data.Order
 import exam.storeapp.data.Product
+import exam.storeapp.utillity.OrderItemTypeConverter
 
 @Database(
     entities = [Product::class, Order::class, CartItem::class],

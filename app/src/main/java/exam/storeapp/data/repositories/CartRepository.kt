@@ -27,13 +27,12 @@ object CartRepository {
         refreshCartItems()
     }
 
-    suspend fun refreshCartItems() {
-        _cartItems.value = _cartItemDao.getAllCartItems()
+   fun calculateTotalSum(): Double {
+        return _cartItems.value.sumOf { it.productPrice * it.productCount }
     }
 
-    suspend fun removeCartItem(cartItem: CartItem) {
-        _cartItemDao.deleteCartItem(cartItem)
-        refreshCartItems()
+    suspend fun refreshCartItems() {
+        _cartItems.value = _cartItemDao.getAllCartItems()
     }
 
     suspend fun clearCart() {

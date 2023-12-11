@@ -1,4 +1,4 @@
-package exam.storeapp.screens.landing_page
+package exam.storeapp.screens.home_page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun LandingPageScreen() {
+fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +32,7 @@ fun LandingPageScreen() {
         ) {
             Text(
                 modifier = Modifier.padding(8.dp),
-                text = "LANDING PAGE",
+                text = "Home",
                 style = MaterialTheme.typography.titleLarge
             )
         }

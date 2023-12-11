@@ -17,11 +17,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import exam.storeapp.data.repositories.CartRepository
 import exam.storeapp.data.NavBarItem
+import exam.storeapp.data.repositories.CartRepository
 import exam.storeapp.data.repositories.OrderRepository
 import exam.storeapp.data.repositories.ProductRepository
-import exam.storeapp.screens.landing_page.LandingPageScreen
+import exam.storeapp.screens.home_page.HomeScreen
 import exam.storeapp.screens.order_history.OrderDetailsScreen
 import exam.storeapp.screens.order_history.OrderViewModel
 import exam.storeapp.screens.order_history.OrdersListScreen
@@ -53,21 +53,20 @@ class MainActivity : ComponentActivity() {
 
                 // Routing for navbar
                 val navBarItems = listOf(
-                    NavBarItem("landingPageScreen", "Home", Icons.Filled.Home),
+                    NavBarItem("homeScreen", "Home", Icons.Filled.Home),
                     NavBarItem("productListScreen", "Products", Icons.Filled.List),
                     NavBarItem("shoppingCartScreen", "Cart", Icons.Filled.ShoppingCart),
                     NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info))
 
-                // https://developer.android.com/jetpack/compose/components/scaffold
                 Scaffold(
                     bottomBar = { BottomNavBar(navController, navBarItems) }
                 ) {innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "landingPageScreen"
+                        startDestination = "homeScreen"
                     ) {
-                        composable("landingPageScreen") {
-                            LandingPageScreen()
+                        composable("homeScreen") {
+                            HomeScreen()
                         }
                         composable(
                             "productListScreen"
@@ -97,7 +96,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("shoppingCartScreen") {
-                            ShoppingCartScreen(viewModel = _shoppingCartViewModel)
+                            ShoppingCartScreen(viewModel = _shoppingCartViewModel, innerPadding = innerPadding)
                         }
                         composable("ordersListScreen") {
                             OrdersListScreen(

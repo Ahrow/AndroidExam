@@ -1,4 +1,4 @@
-package exam.storeapp.data.room
+package exam.storeapp.utillity
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -7,9 +7,6 @@ import exam.storeapp.data.OrderItem
 
 class OrderItemTypeConverter {
     // SQLlite does no support complex objects directly -> Convert to JSON string
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.6 used
-    // https://developer.android.com/training/data-storage/room/referencing-data
-    // https://stackoverflow.com/questions/5571092/convert-object-to-json-in-android
     @TypeConverter
     fun fromOrderItemList(items: List<OrderItem>): String {
         return Gson().toJson(items)
