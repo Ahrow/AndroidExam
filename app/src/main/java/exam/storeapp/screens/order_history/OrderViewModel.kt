@@ -2,7 +2,7 @@ package exam.storeapp.screens.order_history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import exam.storeapp.data.OrderRepository
+import exam.storeapp.data.repositories.OrderRepository
 import exam.storeapp.data.OrderStatus
 import kotlinx.coroutines.launch
 

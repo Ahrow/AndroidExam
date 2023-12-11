@@ -17,9 +17,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import exam.storeapp.data.repositories.CartRepository
 import exam.storeapp.data.NavBarItem
-import exam.storeapp.data.OrderRepository
-import exam.storeapp.data.ProductRepository
+import exam.storeapp.data.repositories.OrderRepository
+import exam.storeapp.data.repositories.ProductRepository
 import exam.storeapp.screens.landing_page.LandingPageScreen
 import exam.storeapp.screens.order_history.OrderDetailsScreen
 import exam.storeapp.screens.order_history.OrderViewModel
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
 
         ProductRepository.initializeDatabase(applicationContext)
         OrderRepository.initializeDatabase(applicationContext)
+        CartRepository.initializeDatabase(applicationContext)
 
         setContent {
             StoreAppTheme {
