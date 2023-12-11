@@ -40,6 +40,7 @@ class ShoppingCartViewModel : ViewModel() {
                 // Update quantity of existing item
                 val updatedCartItem = existingCartItem.copy(productCount = existingCartItem.productCount + count)
                 CartRepository.addCartItem(updatedCartItem)
+                updateTotalSum()
             } else {
                 // Add new item to the cart
                 val newCartItem = CartItem(
@@ -49,6 +50,7 @@ class ShoppingCartViewModel : ViewModel() {
                     productCount = count
                 )
                 CartRepository.addCartItem(newCartItem)
+                updateTotalSum()
             }
         }
     }
@@ -63,7 +65,6 @@ class ShoppingCartViewModel : ViewModel() {
             }
         }
     }
-
     fun decreaseCartItemQuantity(cartItemId: Int) {
         viewModelScope.launch {
             val cartItem = cartItems.value.find { it.id == cartItemId }
@@ -74,7 +75,6 @@ class ShoppingCartViewModel : ViewModel() {
             }
         }
     }
-
     fun completePurchase() {
         viewModelScope.launch {
             val orderItems = cartItems.value.map { cartItem ->
@@ -97,9 +97,9 @@ class ShoppingCartViewModel : ViewModel() {
 
             OrderRepository.addOrder(newOrder)
             CartRepository.clearCart()
+            _totalSum.value = 0.0
         }
     }
-
     fun clearCart() {
         viewModelScope.launch {
             CartRepository.clearCart()

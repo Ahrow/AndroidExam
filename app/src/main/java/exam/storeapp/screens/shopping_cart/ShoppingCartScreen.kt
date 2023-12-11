@@ -65,7 +65,7 @@ fun ShoppingCartScreen(viewModel: ShoppingCartViewModel, innerPadding: PaddingVa
                 .weight(1f)
         ) {
             items(cartItems.value) { item ->
-                CartItemRow(item, viewModel)
+                CartItem(item, viewModel)
             }
         }
 
@@ -94,7 +94,7 @@ fun ShoppingCartScreen(viewModel: ShoppingCartViewModel, innerPadding: PaddingVa
 }
 
 @Composable
-fun CartItemRow(item: CartItem, viewModel: ShoppingCartViewModel) {
+fun CartItem(item: CartItem, viewModel: ShoppingCartViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
