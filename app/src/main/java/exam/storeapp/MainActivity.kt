@@ -17,7 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import exam.storeapp.data.NavBarItem
+import exam.storeapp.data.models.NavBarItem
 import exam.storeapp.data.repositories.CartRepository
 import exam.storeapp.data.repositories.OrderRepository
 import exam.storeapp.data.repositories.ProductRepository
@@ -56,7 +56,8 @@ class MainActivity : ComponentActivity() {
                     NavBarItem("homeScreen", "Home", Icons.Filled.Home),
                     NavBarItem("productListScreen", "Products", Icons.Filled.List),
                     NavBarItem("shoppingCartScreen", "Cart", Icons.Filled.ShoppingCart),
-                    NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info))
+                    NavBarItem("ordersListScreen", "Orders", Icons.Filled.Info)
+                )
 
                 Scaffold(
                     bottomBar = { BottomNavBar(navController, navBarItems) }

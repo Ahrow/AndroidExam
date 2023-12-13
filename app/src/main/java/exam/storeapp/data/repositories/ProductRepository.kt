@@ -3,7 +3,7 @@ package exam.storeapp.data.repositories
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import exam.storeapp.data.Product
+import exam.storeapp.data.models.Product
 import exam.storeapp.data.ProductService
 import exam.storeapp.data.room.AppDatabase
 import kotlinx.coroutines.flow.first

@@ -38,7 +38,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import exam.storeapp.data.Product
+import exam.storeapp.data.models.Product
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package exam.storeapp.data
+package exam.storeapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,11 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "orders")
 data class Order (
-@PrimaryKey val id: Int,
-val date: String,
-val totalPrice: Double,
-val items: List<OrderItem>,
-val status: OrderStatus
+    @PrimaryKey val id: Int,
+    val date: String,
+    val totalPrice: Double,
+    val items: List<OrderItem>,
+    val status: OrderStatus
 )
 
 @Entity(tableName = "order_items")

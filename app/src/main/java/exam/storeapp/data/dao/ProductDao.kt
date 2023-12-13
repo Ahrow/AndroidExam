@@ -1,10 +1,10 @@
-package exam.storeapp.data.room
+package exam.storeapp.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import exam.storeapp.data.Product
+import exam.storeapp.data.models.Product
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,5 +1,6 @@
 package exam.storeapp.data
 
+import exam.storeapp.data.models.Product
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

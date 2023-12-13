@@ -1,4 +1,4 @@
-package exam.storeapp.data
+package exam.storeapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

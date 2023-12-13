@@ -1,4 +1,4 @@
-package exam.storeapp.data
+package exam.storeapp.data.models
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

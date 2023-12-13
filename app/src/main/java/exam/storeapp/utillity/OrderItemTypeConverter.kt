@@ -3,7 +3,7 @@ package exam.storeapp.utillity
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import exam.storeapp.data.OrderItem
+import exam.storeapp.data.models.OrderItem
 
 class OrderItemTypeConverter {
     // SQLlite does no support complex objects directly -> Convert to JSON string

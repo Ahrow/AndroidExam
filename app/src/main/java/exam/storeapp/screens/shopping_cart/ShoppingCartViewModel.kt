@@ -2,11 +2,11 @@ package exam.storeapp.screens.shopping_cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import exam.storeapp.data.CartItem
-import exam.storeapp.data.Order
-import exam.storeapp.data.OrderItem
-import exam.storeapp.data.OrderStatus
-import exam.storeapp.data.Product
+import exam.storeapp.data.models.CartItem
+import exam.storeapp.data.models.Order
+import exam.storeapp.data.models.OrderItem
+import exam.storeapp.data.models.OrderStatus
+import exam.storeapp.data.models.Product
 import exam.storeapp.data.repositories.CartRepository
 import exam.storeapp.data.repositories.OrderRepository
 import exam.storeapp.utillity.OrderIdAndDateGenerator

@@ -10,7 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import exam.storeapp.data.OrderStatus
+import exam.storeapp.data.models.OrderStatus
 @Composable
 fun OrderDetailsScreen(viewModel: OrderViewModel, orderId: Int) {
     val order = viewModel.orders.collectAsState().value.find { it.id == orderId }

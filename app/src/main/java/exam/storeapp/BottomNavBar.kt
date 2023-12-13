@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import exam.storeapp.data.NavBarItem
+import exam.storeapp.data.models.NavBarItem
 
 @Composable
 fun BottomNavBar(navController: NavHostController, navBarItems: List<NavBarItem>) {

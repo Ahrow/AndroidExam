@@ -3,7 +3,7 @@ package exam.storeapp.screens.product_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import exam.storeapp.data.Product
+import exam.storeapp.data.models.Product
 import exam.storeapp.data.repositories.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
